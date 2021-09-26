@@ -5,18 +5,18 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-mongo-sanitize": "^2.1.0",
     "helmet": "^4.6.0",
     "mongoose": "^6.0.7",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.12",
     "xss-clean": "^0.1.1"
   }
 }
