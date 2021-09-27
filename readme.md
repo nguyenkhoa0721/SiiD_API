@@ -30,7 +30,7 @@ make
 Example:
 
 ```
-docker exec -it debion_tp_api /bin/ash
+docker exec -it api /bin/ash
 
 (inside container shell)
 npm install abcxyz
