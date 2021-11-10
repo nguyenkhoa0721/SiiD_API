@@ -3,8 +3,10 @@ const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const morgan = require("morgan");
 const xss = require("xss-clean");
-
+const cors = require("cors");
 const app = express();
+require("dotenv").config();
+
 
 const whitelist = process.env.ACCESS_CONTROL_ALLOW_ORIGIN.split(",");
 const corsOptions = {
@@ -21,6 +23,7 @@ const corsOptions = {
 
 //app use
 app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use(helmet());
