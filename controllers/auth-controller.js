@@ -10,7 +10,20 @@ const signToken = async (req, res, id) => {
     expiresIn: process.env.JWT_EXPIRES,
   });
 };
-
+exports.isLogged= (req,res,next) => {
+  const token =req.headers["authorization"] 
+  if (!token) {
+    return sendRes.resError(res,"Missing token in header",401)
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_CODE);
+    //req.user = decoded;
+  } catch (err) {
+    return sendRes.resError(res,"Invalid Token",401)
+  }
+  return next();
+  //return sendRes.resSuccess(res,"Nice");
+}
 exports.signup = async (req, res) => {
   let errors = {};
   const user = new User(req.body);
@@ -44,6 +57,7 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
+  console.log("vo dc login")
   //tách email, password trong body
   const { email, password } = req.body;
 
