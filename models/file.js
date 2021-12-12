@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const fileSchema= new mongoose.Schema({
-    user: {
+    createdBy: {
         type: mongoose.Schema.ObjectId,
         ref: 'user',
         required: [true, "user required"]
@@ -9,12 +9,12 @@ const fileSchema= new mongoose.Schema({
     path: {
         type: String,
         required: [true, "path required"]
-    },
-    timestamps: true
-});
+    }},
+    {timestamps: true}
+);
 
 fileSchema.pre(/^find/, function(next){
-    this.populate('user');
+    this.populate('createdBy');
     next();
 });
 const file = mongoose.model("file", fileSchema);

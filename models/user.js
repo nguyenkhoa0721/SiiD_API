@@ -29,9 +29,9 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 6,
   },
-  birth: Date,
-  timestamps: true
-});
+  birth: Date
+},{timestamps: true});
+
 userSchema.set("toObject", { virtuals: true });
 userSchema.set("toJSON", { virtuals: true });
 

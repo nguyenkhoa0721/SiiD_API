@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const commentSchema= new mongoose.Schema({
-    user: {
+    createdBy: {
         type: mongoose.Schema.ObjectId,
         ref: 'user',
         required: [true, "user required"]
@@ -22,12 +22,12 @@ const commentSchema= new mongoose.Schema({
     parent: {
         type: mongoose.Schema.ObjectId,
         ref: 'comment',
-    },
-    timestamps: true
-});
+    }},
+    {timestamps: true}
+);
 
 commentSchema.pre(/^find/, function(next){
-    this.populate('user').populate('files');
+    this.populate('createdBy').populate('files');
     next();
 });
 const comment = mongoose.model("comment",commentSchema);

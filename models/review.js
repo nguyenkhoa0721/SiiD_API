@@ -11,7 +11,7 @@ const reviewSchema= new mongoose.Schema({
         max: 5,
         required: [true, "rating required"]
     },
-    user: {
+    createdBy: {
         type: mongoose.Schema.ObjectId,
         ref: 'user',
         required: [true, "user required"]
@@ -20,12 +20,12 @@ const reviewSchema= new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'project',
         required: [true, "project required"]
-    },
-    timestamps: true
-});
+    }},
+    {timestamps: true}
+);
 
 reviewSchema.pre(/^find/, function(next){
-    this.populate('user').populate('project');
+    this.populate('createdBy').populate('project');
     next();
 });
 const review = mongoose.model("review",reviewSchema);

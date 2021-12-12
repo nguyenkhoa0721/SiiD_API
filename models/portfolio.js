@@ -1,8 +1,13 @@
 const mongoose = require("mongoose");
-//const slugify = require("slugify");
+const slugify = require("slugify");
 
 const portfolioSchema= new mongoose.Schema({
     slug: String,
+    createdBy: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'user',
+        required: [true, "user required"]
+    },
     description: {
         type: String,
         required: [true, "description required"]
@@ -30,9 +35,26 @@ const portfolioSchema= new mongoose.Schema({
     inspiration: {
         type: String,
         required: [true, "inspiration required"]
-    },
-    timestamps: true
-});
+    }},
+    {timestamps: true}
+);
+var User = mongoose.model('user');
 
+portfolioSchema.pre("save", function (next) {
+    var self = this;
+    User.findById( self.createdBy, function (err, user) {
+        if (err)
+        {
+            //err lam gi gio`
+        }
+        var preSlug=user.name+" "+user.username;
+        self.slug = slugify(preSlug)
+        next();
+    });
+});
+portfolioSchema.pre(/^find/, function(next){
+    this.populate('createdBy');
+    next();
+}); 
 const portfolio = mongoose.model("portfolio",portfolioSchema);
 module.exports = portfolio;
