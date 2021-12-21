@@ -20,6 +20,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.7",
     "morgan": "^1.10.0",
+    "psd": "^3.4.0",
+    "shortid": "^2.2.16",
     "validator": "^13.6.0",
     "xss-clean": "^0.1.1"
   }

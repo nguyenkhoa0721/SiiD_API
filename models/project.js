@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const projectSchema = new mongoose.Schema(
   {
+    owner: {
+      type: mongoose.Schema.ObjectId,
+      ref: "user",
+    },
     clients: [
       {
         type: mongoose.Schema.ObjectId,
@@ -31,6 +35,8 @@ const projectSchema = new mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       ref: "payment",
     },
+    inviteClient: String,
+    inviteDesign: String,
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
