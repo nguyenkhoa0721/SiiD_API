@@ -4,7 +4,7 @@ const slugify = require("slugify");
 const portfolioSchema= new mongoose.Schema({
     slug: String,
     createdBy: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
         required: [true, "user required"]
     },

@@ -3,13 +3,14 @@ const mongoose = require("mongoose");
 const designSchema = new mongoose.Schema(
   {
     imageFile: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "file",
     },
     designFile: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "file",
     },
+    originName: String,
     waterMark: Boolean,
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }

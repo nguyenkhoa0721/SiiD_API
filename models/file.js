@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const fileSchema= new mongoose.Schema({
     createdBy: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
         required: [true, "user required"]
     },
