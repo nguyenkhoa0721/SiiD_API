@@ -7,7 +7,6 @@ const cors = require("cors");
 const app = express();
 require("dotenv").config();
 
-
 const whitelist = process.env.ACCESS_CONTROL_ALLOW_ORIGIN.split(",");
 const corsOptions = {
   origin: function (origin, callback) {
@@ -32,6 +31,10 @@ app.use(xss());
 
 //routes
 const userRoute = require("./routes/user-route");
+const projectRoute = require("./routes/project-route");
+const historyRoute = require("./routes/history-route");
 app.use("/api/v1/user/", userRoute);
+app.use("/api/v1/project/", projectRoute);
+app.use("/api/v1/history/", historyRoute);
 
 module.exports = app;

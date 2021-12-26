@@ -1,4 +1,4 @@
-const Project = require("../models/projects");
+const Project = require("../models/project");
 const History = require("../models/history");
 const Payment = require("../models/history");
 const sendRes = require("../utils/send-res");
@@ -10,7 +10,7 @@ exports.getAll = async (req, res) => {
       { designers: { $elemMatch: { $eq: req.user } } },
       { clients: { $elemMatch: { $eq: req.user } } },
     ],
-  });
+  }).populate("clients designers owner");
   return sendRes.resSuccess(res, projects);
 };
 
@@ -21,13 +21,16 @@ exports.getOne = async (req, res) => {
   if (!project) {
     return sendRes.resError(res, "Không tìm thấy", 404);
   }
-  if (!clients.includes(req.user) && !designers.includes(req.user)) {
+  if (!project.clients.includes(req.user) && !project.designers.includes(req.user)) {
     return sendRes.resError(res, "Không được phép", 406);
   }
+  project = await project.populate("clients designers owner");
   project = await project.toJSON();
-  project.current = await History.findById(project.histories[project.histories.length - 1]).sort({
-    createdAt: -1,
-  });
+  project.current = await History.findById(project.histories[project.histories.length - 1])
+    .sort({
+      createdAt: -1,
+    })
+    .populate("designs");
   return sendRes.resSuccess(res, project);
 };
 
@@ -37,7 +40,7 @@ exports.create = async (req, res) => {
   let project = new Project({ payment });
 
   project.owner = req.user;
-  project.clients.add(req.user);
+  project.clients.push(req.user);
   project.projectName = req.body.projectName;
   project.state = "pending";
 
@@ -76,15 +79,15 @@ exports.join = async (req, res) => {
     return sendRes.resError(res, "Không tìm thấy", 404);
   }
 
-  if (clients.includes(req.user) || designers.includes(req.user))
+  if (project.clients.includes(req.user) || project.designers.includes(req.user))
     return sendRes.resSuccess(res, {});
 
   if (project.inviteClient == req.query.password) {
-    project.clients.add(req.user);
+    project.clients.push(req.user);
     await project.save();
     return sendRes.resSuccess(res, {});
   } else if (project.inviteDesign == req.query.password) {
-    project.designers.add(req.user);
+    project.designers.push(req.user);
     await project.save();
     return sendRes.resSuccess(res, {});
   } else {

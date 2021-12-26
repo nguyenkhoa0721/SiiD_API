@@ -3,18 +3,18 @@ const mongoose = require("mongoose");
 const projectSchema = new mongoose.Schema(
   {
     owner: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "user",
     },
     clients: [
       {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "user",
       },
     ],
     designers: [
       {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "user",
       },
     ],
@@ -32,7 +32,7 @@ const projectSchema = new mongoose.Schema(
       },
     ],
     payment: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "payment",
     },
     inviteClient: String,

@@ -7,7 +7,7 @@ const paymentSchema = new mongoose.Schema(
     historyPaid: [
       {
         paidBy: {
-          type: mongoose.Schema.ObjectId,
+          type: mongoose.Schema.Types.ObjectId,
           ref: "user",
         },
         amount: Number,

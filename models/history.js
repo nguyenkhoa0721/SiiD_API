@@ -3,17 +3,17 @@ const mongoose = require("mongoose");
 const historySchema = new mongoose.Schema(
   {
     project: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "project",
     },
-    design: [
+    designs: [
       {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "design",
       },
     ],
     createdBy: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "user",
     },
     changeNote: String,
