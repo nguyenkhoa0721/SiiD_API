@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 
 const commentSchema= new mongoose.Schema({
     createdBy: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
         required: [true, "user required"]
     },
     design: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'design',
         required: [true, "design required"]
     },

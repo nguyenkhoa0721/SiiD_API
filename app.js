@@ -7,7 +7,6 @@ const cors = require("cors");
 const app = express();
 require("dotenv").config();
 
-
 const whitelist = process.env.ACCESS_CONTROL_ALLOW_ORIGIN.split(",");
 const corsOptions = {
   origin: function (origin, callback) {
@@ -35,8 +34,12 @@ const userRoute = require("./routes/user-route");
 const profileRoute = require("./routes/profile-route");
 const portfolioRoute = require("./routes/portfolio-route");
 const commentRoute = require ("./routes/comment-route.js");
-
+const projectRoute = require("./routes/project-route");
+const historyRoute = require("./routes/history-route");
 app.use("/api/v1/user/", userRoute);
+app.use("/api/v1/project/", projectRoute);
+app.use("/api/v1/history/", historyRoute);
+
 app.use("/api/v1/profile",profileRoute);
 app.use("/api/v1/portfolio",portfolioRoute);
 app.use("/api/v1/comment", commentRoute);

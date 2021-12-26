@@ -12,12 +12,12 @@ const reviewSchema= new mongoose.Schema({
         required: [true, "rating required"]
     },
     createdBy: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
         required: [true, "user required"]
     },
     project: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'project',
         required: [true, "project required"]
     }},
