@@ -16,15 +16,14 @@ const commentSchema= new mongoose.Schema({
         required: [true, "content required"]
     },
     files: [{
-        type: mongoose.Schema.ObjectId,
-        ref: 'file'
-    }],
-    parent: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'comment',
-    }},
+        type: String
+    }]
+    },
     {timestamps: true}
 );
+
+commentSchema.set("toObject", { virtuals: true });
+commentSchema.set("toJSON", { virtuals: true });
 
 commentSchema.pre(/^find/, function(next){
     this.populate('createdBy').populate('files');

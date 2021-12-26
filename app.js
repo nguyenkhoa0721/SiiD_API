@@ -32,6 +32,12 @@ app.use(xss());
 
 //routes
 const userRoute = require("./routes/user-route");
-app.use("/api/v1/user/", userRoute);
+const profileRoute = require("./routes/profile-route");
+const portfolioRoute = require("./routes/portfolio-route");
+const commentRoute = require ("./routes/comment-route.js");
 
+app.use("/api/v1/user/", userRoute);
+app.use("/api/v1/profile",profileRoute);
+app.use("/api/v1/portfolio",portfolioRoute);
+app.use("/api/v1/comment", commentRoute);
 module.exports = app;

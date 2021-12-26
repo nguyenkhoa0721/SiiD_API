@@ -13,6 +13,9 @@ const fileSchema= new mongoose.Schema({
     {timestamps: true}
 );
 
+fileSchema.set("toObject", { virtuals: true });
+fileSchema.set("toJSON", { virtuals: true });
+
 fileSchema.pre(/^find/, function(next){
     this.populate('createdBy');
     next();

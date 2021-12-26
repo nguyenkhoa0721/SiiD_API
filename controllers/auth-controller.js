@@ -27,7 +27,7 @@ exports.isLogged = (req, res, next) => {
     console.log(err)
     return sendRes.resError(res, "Invalid Token", 401)
   }
-  return next();
+  next();
   //return sendRes.resSuccess(res,"Nice");
 }
 exports.signup = async (req, res) => {
