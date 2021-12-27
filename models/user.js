@@ -29,7 +29,8 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 6,
   },
-  birth: Date
+  birth: Date,
+  avatar: String,
 },{timestamps: true});
 
 userSchema.set("toObject", { virtuals: true });

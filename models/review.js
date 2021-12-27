@@ -24,6 +24,9 @@ const reviewSchema= new mongoose.Schema({
     {timestamps: true}
 );
 
+reviewSchema.set("toObject", { virtuals: true });
+reviewSchema.set("toJSON", { virtuals: true });
+
 reviewSchema.pre(/^find/, function(next){
     this.populate('createdBy').populate('project');
     next();
