@@ -17,7 +17,7 @@ exports.getPortfolio = async (req, res, next) => {
 };
 exports.getAllDesign = async (req, res, next) => {
     try {
-        const doc = await File.find({createdBy: req.user}, '-createdBy');
+        const doc = await File.find({createdBy: req.user}, 'path');
         return sendRes.resSuccess(res, doc);  
         //khong co thi data=null 
     } catch (err) {

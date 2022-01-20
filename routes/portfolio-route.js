@@ -1,7 +1,7 @@
 const express = require('express');
 const portfolioController = require("./../controllers/portfolio-controller");
 const authController = require("./../controllers/auth-controller");
-const router = require('./profile-route');
+const router = express.Router();
 
 router.use(authController.isLogged);
 

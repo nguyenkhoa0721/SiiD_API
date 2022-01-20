@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+const Portfolio = require("../models/portfolio");
 
 const sendRes = require("../utils/send-res");
 
@@ -45,10 +46,17 @@ exports.signup = async (req, res) => {
   try {
     //lưu user
     await user.save();
+    //Tao portfoli
+    const portfolio = new Portfolio();
+    portfolio.createdBy = user._id;
+    await portfolio.save();
     //tạo token và gửi thông qua cookie
+    
     return sendRes.resSuccess(res, {
       token: await signToken(req, res, user._id),
     });
+
+
   } catch (err) {
     //check lỗi valid trong mongo
     if (err.name === "ValidationError") {
