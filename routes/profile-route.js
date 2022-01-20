@@ -14,6 +14,7 @@ router
     )
     .post(
         authController.isLogged,
+        profileController.preUpdateAvatar,
         multer.upload.single('avatar'),
         profileController.updateAvatar
     )

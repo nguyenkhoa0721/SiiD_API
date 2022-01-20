@@ -65,6 +65,7 @@ exports.signup = async (req, res) => {
       });
       return sendRes.resError(res, errors, 422);
     }
+    console.log(err);
     //gửi về lỗi này
     return sendRes.resError(res, "something went wrong", 500);
   }
