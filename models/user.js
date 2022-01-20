@@ -39,6 +39,12 @@ const userSchema = new mongoose.Schema(
 userSchema.set("toObject", { virtuals: true });
 userSchema.set("toJSON", { virtuals: true });
 
+userSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
+}
+
 //trước khi lưu gì đó vào DB, nó sẽ check xem password có đổi ko => nếu đổi thì hash lại password rồi lưu vào DB
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
