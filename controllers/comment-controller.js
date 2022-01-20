@@ -4,20 +4,14 @@ const File = require ('./../models/file');
 const sendRes = require("../utils/send-res");
 
 exports.createComment = async (req, res, next) => {
-    //form-data có files, content
     const comment = new Comment(req.body);
-    
-    //filter ra path
+    //form-data có files, createdBy, design, content
     const files=[];
     req.files.forEach(function (file) {
         files.push(file.path);
     })
     comment.files=files;
-    
-    //design id va uID
-    comment.createdBy = req.user;
-    comment.design = req.params.id;
-
+    //filter ra path
     try {
         await comment.save();
         return sendRes.resSuccess(res,comment);

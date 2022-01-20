@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.use(authController.isLogged);
 
-router.post('/:id',multer.upload.any('images'),commentController.createComment);
+router.post('/',multer.upload.any('images'),commentController.createComment);
 router
     .route('/:id')
     .get(commentController.getAllComments)
