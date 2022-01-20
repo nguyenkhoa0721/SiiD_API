@@ -3,38 +3,47 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    lowercase: true,
-    required: [true, "can't be blank"],
-    match: [/^[a-zA-Z0-9]+$/, "is invalid"],
-    index: true,
-    unique: true,
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      lowercase: true,
+      required: [true, "can't be blank"],
+      match: [/^[a-zA-Z0-9]+$/, "is invalid"],
+      index: true,
+      unique: true,
+    },
+    phone: String,
+    name: {
+      type: String,
+      required: [true, "name required"],
+    },
+    email: {
+      type: String,
+      required: [true, "email required"],
+      unique: true,
+      lowercase: true,
+      validate: validator.isEmail,
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 6,
+    },
+    birth: Date,
+    avatar: String,
   },
-  phone: String,
-  name: {
-    type: String,
-    required: [true, "name required"],
-  },
-  email: {
-    type: String,
-    required: [true, "email required"],
-    unique: true,
-    lowercase: true,
-    validate: validator.isEmail,
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 6,
-  },
-  birth: Date,
-  avatar: String,
-},{timestamps: true});
+  { timestamps: true }
+);
 
 userSchema.set("toObject", { virtuals: true });
 userSchema.set("toJSON", { virtuals: true });
+
+userSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
+}
 
 //trước khi lưu gì đó vào DB, nó sẽ check xem password có đổi ko => nếu đổi thì hash lại password rồi lưu vào DB
 userSchema.pre("save", async function (next) {
@@ -44,10 +53,7 @@ userSchema.pre("save", async function (next) {
 });
 
 //hàm để check xem password nhập nào có giôngs trong database
-userSchema.methods.correctPassword = async function (
-  candidatePassword,
-  userPassword
-) {
+userSchema.methods.correctPassword = async function (candidatePassword, userPassword) {
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 
