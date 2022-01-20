@@ -32,6 +32,15 @@ exports.updateProfile = async (req, res, next) => {
         return sendRes.resError(res, "Something's wrong");
     }  
 }
+exports.preUpdateAvatar = (req,res,next) => {
+    let fs = require ("fs-extra");
+    req.dirname1 = `public/user/${req.user}`;
+    if (!fs.existsSync(req.dirname1))
+    {
+        fs.mkdirsSync(req.dirname1);
+    }
+    next();
+}
 exports.updateAvatar = async (req, res, next) => {
     try{
         const doc = await User.findByIdAndUpdate(req.user, {avatar: req.file.path}, {
@@ -42,6 +51,7 @@ exports.updateAvatar = async (req, res, next) => {
         }
         return sendRes.resSuccess(res, doc);
     } catch (err) {
+        console.log(err);
         return sendRes.resError(res, "Something's wrong");
     }
 

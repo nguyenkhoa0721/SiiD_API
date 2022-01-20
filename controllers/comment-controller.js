@@ -2,10 +2,21 @@ const Comment = require('./../models/comment');
 const File = require ('./../models/file');
 
 const sendRes = require("../utils/send-res");
-
+exports.preCreateComment = (req,res,next) => {
+    let fs = require ("fs-extra");
+    req.dirname1 = `public/user/${req.user}`;
+    if (!fs.existsSync(req.dirname1))
+    {
+        fs.mkdirsSync(req.dirname1);
+    }
+    next();
+}
 exports.createComment = async (req, res, next) => {
     const comment = new Comment(req.body);
-    //form-data có files, createdBy, design, content
+    //form-data có files, content
+    comment.design = req.params.id;
+    comment.createdBy = req.user;
+    
     const files=[];
     req.files.forEach(function (file) {
         files.push(file.path);
