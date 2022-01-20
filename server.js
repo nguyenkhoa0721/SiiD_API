@@ -33,7 +33,7 @@ if (process.env.ENV == "dev") {
     });
 }
 //connect to db
-
+console.log("Connect roi ne");
 //start app
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

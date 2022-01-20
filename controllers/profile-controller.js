@@ -3,7 +3,7 @@ const sendRes = require("../utils/send-res");
 
 exports.getProfile = async (req, res, next) => {
     let query = User.findById(req.params.id);
-    let query1 = User.findOne({username: req.params.id})
+    let query1 = User.findOne({username: req.params.id});
     try {
         let doc = await query;
         if (!doc) 

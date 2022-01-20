@@ -32,6 +32,9 @@ const userSchema = new mongoose.Schema(
     },
     birth: Date,
     avatar: String,
+    job: String,
+    country: String,
+    description: String,
   },
   { timestamps: true }
 );
