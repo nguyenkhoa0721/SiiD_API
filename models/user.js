@@ -13,7 +13,10 @@ const userSchema = new mongoose.Schema(
       index: true,
       unique: true,
     },
-    phone: String,
+    phone: {
+      type: String,
+      default: ""
+    },
     name: {
       type: String,
       required: [true, "name required"],
@@ -32,9 +35,18 @@ const userSchema = new mongoose.Schema(
     },
     birth: Date,
     avatar: String,
-    job: String,
-    country: String,
-    description: String,
+    job: {
+      type: String,
+      default: ""
+    },
+    country: {
+      type: String,
+      default: ""
+    },
+    description: {
+      type: String,
+      default: ""
+    },
   },
   { timestamps: true }
 );
