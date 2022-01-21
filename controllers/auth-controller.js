@@ -91,6 +91,8 @@ exports.login = async (req, res) => {
   } else {
     return sendRes.resSuccess(res, {
       token: await signToken(req, res, user._id),
+      id: user._id,
+      username: user.username
     });
   }
 };
