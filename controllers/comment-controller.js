@@ -1,5 +1,6 @@
 const Comment = require('./../models/comment');
 const File = require ('./../models/file');
+const slugify = require("slugify");
 
 const sendRes = require("../utils/send-res");
 exports.preCreateComment = (req,res,next) => {
@@ -19,6 +20,7 @@ exports.createComment = async (req, res, next) => {
     
     const files=[];
     req.files.forEach(function (file) {
+        file.path=slugify(file.path);
         files.push(file.path);
     })
     comment.files=files;
