@@ -38,7 +38,7 @@ const projectRoute = require("./routes/project-route");
 const historyRoute = require("./routes/history-route");
 
 
-app.use('/static',express.static('public'));
+app.use('/api/v1/public',express.static('public'));
 
 app.use("/api/v1/user/", userRoute);
 app.use("/api/v1/project/", projectRoute);
