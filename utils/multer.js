@@ -1,11 +1,12 @@
 const multer = require('multer');
-
+const slugify = require('slugify');
 const storage =  multer.diskStorage({
     destination: function(req, file, cb) {
       cb(null, req.dirname1);
     },
     filename: function(req, file, cb) {
-      cb(null, Date.now() + '-' + file.originalname);
+      let tmp = slugify(file.originalname);
+      cb(null, Date.now() + '-' + tmp);
     }
 });
 const fileFilter = (req, file, cb) => {
