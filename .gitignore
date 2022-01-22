@@ -27,5 +27,4 @@ benchmarks/graphs
 .env
 *.pem
 .vscode/*
-public/*
 data/*
