@@ -1,6 +1,6 @@
 const User = require('./../models/user');
 const sendRes = require("../utils/send-res");
-
+const slugify = require("slugify");
 exports.getProfile = async (req, res, next) => {
     let query = User.findById(req.params.id);
     let query1 = User.findOne({username: req.params.id});
@@ -43,6 +43,7 @@ exports.preUpdateAvatar = (req,res,next) => {
 }
 exports.updateAvatar = async (req, res, next) => {
     try{
+        req.file.path=slugify(req.file.path);
         const doc = await User.findByIdAndUpdate(req.user, {avatar: req.file.path}, {
             new: true, //tra ve cai moi thay vi cai cu~
         });

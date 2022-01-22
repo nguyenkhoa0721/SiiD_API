@@ -22,7 +22,7 @@ const corsOptions = {
 
 //app use
 app.use(cors(corsOptions));
-
+app.use('/static',express.static('public'));
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use(helmet());
