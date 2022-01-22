@@ -1,6 +1,6 @@
 const Comment = require('./../models/comment');
 const File = require ('./../models/file');
-//const slugify = require("slugify");
+
 
 const sendRes = require("../utils/send-res");
 exports.preCreateComment = (req,res,next) => {
