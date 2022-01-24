@@ -6,10 +6,10 @@ const commentSchema= new mongoose.Schema({
         ref: 'user',
         required: [true, "user required"]
     },
-    design: {
+    history: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'design',
-        required: [true, "design required"]
+        ref: 'history',
+        required: [true, "history required"]
     },
     content: {
         type: String,
