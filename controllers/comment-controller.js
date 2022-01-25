@@ -15,7 +15,7 @@ exports.preCreateComment = (req,res,next) => {
 exports.createComment = async (req, res, next) => {
     const comment = new Comment(req.body);
     //form-data có files, content
-    comment.design = req.params.id;
+    comment.history = req.params.id;
     comment.createdBy = req.user;
     
     const files=[];
@@ -57,7 +57,7 @@ exports.updateComment = async (req, res, next) => {
 };
 exports.getAllComments = async (req, res, next) => {
     try {
-        const doc = await Comment.find({design: req.params.id}, '-design');
+        const doc = await Comment.find({history: req.params.id}, '-history');
         return sendRes.resSuccess(res, doc);  
         //khong co thi data=null 
     } catch (err) {
