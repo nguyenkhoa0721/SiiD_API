@@ -9,12 +9,13 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + "-" + tmp);
   },
 });
+let psd = ["application/x-photoshop", "application/octet-stream", "image/vnd.adobe.photoshop"];
 const fileFilter = (req, file, cb) => {
   if (
     file.mimetype === "image/jpeg" ||
     file.mimetype === "image/png" ||
     file.mimetype === "image/jpg" ||
-    file.minetype === "psd"
+    psd.include(file.minetype)
   ) {
     cb(null, true);
   } else {
