@@ -99,7 +99,9 @@ exports.create = async (req, res, next) => {
 
   req.oldHistory = await History.findOne({
     project: req.params.id,
-  }).populate("designs");
+  })
+    .sort({ createdAt: -1 })
+    .populate("designs");
 
   req.history = await History.create({});
   req.dirname = `public/project/${req.params.id}/history/${req.history.id}`;
@@ -108,6 +110,7 @@ exports.create = async (req, res, next) => {
 };
 
 exports.createEndPoint = async (req, res) => {
+  let thumbnail = "";
   req.history.project = req.project._id;
   if (req.files.length) {
     let arr = [];
@@ -117,22 +120,21 @@ exports.createEndPoint = async (req, res) => {
       if (path.extname(req.files[i].path) == ".psd") {
         const psd = await PSD.open(req.files[i].path);
         psd.image.saveAsPng(req.files[i].path.split(".")[0] + ".png");
-
         designFile = await File.create({
-          path: "/static" + req.files[i].path.slice(6),
+          path: req.files[i],
           createdBy: req.user,
         });
-
         imageFile = await File.create({
-          path: "/static" + (req.files[i].path.split(".")[0] + ".png").slice(6),
+          path: req.files[i].path.split(".")[0] + ".png",
           createdBy: req.user,
         });
       } else {
         imageFile = await File.create({
-          path: "/static" + req.files[i].path.slice(6),
+          path: req.files[i].path,
           createdBy: req.user,
         });
       }
+      if (!thumbnail) thumbnail = req.files[i].path;
       let basename = path.parse(req.files[i].path.split(".")[0]).base;
       let originName = basename.split("-")[0];
 
@@ -159,6 +161,9 @@ exports.createEndPoint = async (req, res) => {
     req.history.createdBy = req.user;
 
     req.history = await req.history.save();
+
+    req.project.thumbnail = thumbnail;
+    await req.project.save();
     return sendRes.resSuccess(res, req.history);
   }
 };

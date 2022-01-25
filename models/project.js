@@ -35,6 +35,7 @@ const projectSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "payment",
     },
+    thumbnail: String,
     inviteClient: String,
     inviteDesign: String,
   },
