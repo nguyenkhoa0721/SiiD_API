@@ -90,10 +90,10 @@ exports.uploadMultiFiles = multer({
 exports.create = async (req, res, next) => {
   req.project = await Project.findOne({
     _id: req.params.id,
-    designers: { $elemMatch: { $eq: req.user } },
   });
+  console.log(req.project);
 
-  if (!req.project) {
+  if (!req.project || !req.project.designers.includes(req.user)) {
     return sendRes.resError(res, "Không tìm thấy", 404);
   }
 

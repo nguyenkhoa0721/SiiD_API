@@ -10,14 +10,21 @@ exports.getAll = async (req, res) => {
       { designers: { $elemMatch: { $eq: req.user } } },
       { clients: { $elemMatch: { $eq: req.user } } },
     ],
-  }).populate("clients designers owner");
+  })
+    .populate("clients designers owner")
+    .sort({ updatedAt: -1 });
   return sendRes.resSuccess(res, projects);
 };
 
 exports.getOne = async (req, res) => {
   let project = await Project.findOne({
     _id: req.params.id,
-  }).populate("histories");
+  }).populate({
+    path: "histories",
+    options: {
+      sort: { createdAt: -1 },
+    },
+  });
   if (!project) {
     return sendRes.resError(res, "Không tìm thấy", 404);
   }
@@ -101,7 +108,10 @@ exports.delete = async (req, res) => {
     _id: req.params.id,
     owner: req.user,
   });
-
-  await project.delete();
+  if (!project || project.owner != req.user)
+    return sendRes.resError(res, "Không được phép xóa", 406);
+  else {
+    await project.delete();
+  }
   return sendRes.resSuccess(res, {});
 };
