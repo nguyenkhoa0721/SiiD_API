@@ -47,7 +47,7 @@ exports.create = async (req, res) => {
   let project = new Project({ payment });
 
   project.owner = req.user;
-  project.clients.push(req.user);
+  project.designers.push(req.user);
   project.projectName = req.body.projectName;
   project.state = "pending";
 
